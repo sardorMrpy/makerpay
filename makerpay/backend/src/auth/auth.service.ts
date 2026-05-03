@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcryptjs';
+import axios from 'axios';
 import { User, UserRole } from '../users/entities/user.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -68,7 +69,6 @@ export class AuthService {
   }
 
   async googleLoginWithCode(code: string) {
-    const axios = require('axios');
     const tokenRes = await axios.post('https://oauth2.googleapis.com/token', {
       code,
       client_id:     process.env.GOOGLE_CLIENT_ID,

@@ -1,17 +1,17 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/store/auth.store';
 import { Loader2 } from 'lucide-react';
 
-export default function GoogleSuccessPage() {
+function GoogleSuccessContent() {
   const router = useRouter();
-  const params = useSearchParams();
+  const searchParams = useSearchParams();
   const { setAuth } = useAuthStore();
 
   useEffect(() => {
-    const token = params.get('token');
-    const userStr = params.get('user');
+    const token = searchParams.get('token');
+    const userStr = searchParams.get('user');
     if (token && userStr) {
       try {
         const user = JSON.parse(decodeURIComponent(userStr));
@@ -23,7 +23,7 @@ export default function GoogleSuccessPage() {
     } else {
       router.push('/login');
     }
-  }, []);
+  }, [searchParams, router, setAuth]);
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center">
@@ -32,5 +32,17 @@ export default function GoogleSuccessPage() {
         <p className="text-gray-400 text-sm">Google orqali kirilmoqda...</p>
       </div>
     </div>
+  );
+}
+
+export default function GoogleSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-white" />
+      </div>
+    }>
+      <GoogleSuccessContent />
+    </Suspense>
   );
 }
