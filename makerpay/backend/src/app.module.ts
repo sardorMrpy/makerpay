@@ -36,7 +36,7 @@ import configuration from './config/configuration';
         password: config.get('DB_PASSWORD', 'postgres'),
         database: config.get('DB_NAME', 'makerpay'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: false,
+        synchronize: config.get('DB_SYNC') === 'true',
         logging: config.get('NODE_ENV') === 'development',
         ssl: config.get('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
       }),

@@ -5,7 +5,11 @@
 ### 1. Server tayyorlash (Ubuntu 22.04)
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y nginx certbot python3-certbot-nginx docker.io docker-compose nodejs npm git
+sudo apt install -y nginx certbot python3-certbot-nginx docker.io docker-compose git
+
+# Node.js 20 ni o'rnatish (NestJS va Next.js uchun Node 18+ kerak)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
 
 # PostgreSQL
 sudo apt install -y postgresql postgresql-contrib
@@ -23,10 +27,13 @@ cd makerpay
 ### 3. Backend sozlash
 ```bash
 cd backend
-cp .env.example .env
-nano .env   # O'zingizning qiymatlarni kiriting
-
 npm install
+cp .env.example .env
+
+# .env faylini tahrirlang:
+# DB_SYNC=true qilib o'zgartiring (faqat birinchi marta bazani yaratish uchun)
+nano .env   
+
 npm run build
 ```
 
@@ -46,9 +53,10 @@ npm install -g pm2
 
 # Backend
 cd /var/www/makerpay/backend
+# Agar dist folder yo'q bo'lsa, 'npm run build' muvaffaqiyatli tugaganini tekshiring
 pm2 start dist/main.js --name makerpay-api
 
-# Frontend
+# Frontend (Next.js)
 cd /var/www/makerpay/frontend
 pm2 start npm --name makerpay-web -- start
 

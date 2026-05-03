@@ -1,6 +1,6 @@
 {
-  "name": "Mening Ilk Loyiham",
-  "description": "Vite, React va Tailwind CSS yordamida yaratilgan zamonaviy veb-ilova.",
+  "name": "MakerPay - B2B To'lov Platformasi",
+  "description": "MakerPay - B2B to'lovlarni avtomatlashtirish va boshqarish platformasi. NestJS va Next.js yordamida yaratilgan.",
   "requestFramePermissions": [],
   "majorCapabilities": []
 }
